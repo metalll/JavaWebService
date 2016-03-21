@@ -1,4 +1,4 @@
-package Interfaces;
+package Controller.Interfaces;
 
 import javax.jws.WebMethod;
 import javax.jws.WebService;
@@ -15,5 +15,5 @@ public interface IWebService {
     // говорим, что этот метод можно вызывать удаленно
     @WebMethod
     public String getHelloString(String name);
-
+//
 }

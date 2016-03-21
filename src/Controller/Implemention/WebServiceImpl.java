@@ -1,12 +1,12 @@
-package Implemention;
+package Controller.Implemention;
 
-import Interfaces.IWebService;
+import Controller.Interfaces.IWebService;
 
 import javax.jws.WebService;
 // таже аннотация, что и при описании интерфейса,
 
 
-@WebService(endpointInterface = "Interfaces.IWebService")
+@WebService(endpointInterface = "Controller.Interfaces.IWebService")
 public class WebServiceImpl implements IWebService {
     @Override
     public String getHelloString(String name) {
