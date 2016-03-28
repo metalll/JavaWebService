@@ -16,8 +16,10 @@ public interface IWebService {
     @WebMethod
     public String getHelloString(String name);
 
+    @WebMethod
     public String[] getWeather(String city);
 
+    @WebMethod
     public String[] getCites();
 }
 
