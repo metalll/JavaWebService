@@ -21,12 +21,13 @@ public class DataManager {
     private Dao<Weather, String> dao;
 
     private DataManager() {
-
+        System.out.println("Подключение к бд..." + "#Поток:" + "MainThread");
         try {
 
 
             source = new JdbcConnectionSource(url);
             dao = DaoManager.createDao(source, Weather.class);
+            System.out.println("Бд успешно подключена..." + "#Поток:" + "MainThread");
 
         } catch (Exception e) {
 
@@ -49,11 +50,11 @@ public class DataManager {
 
     public List<Weather> getAllWeather() {
 
-        System.out.print("Запрос к бд...");
+        System.out.println("Запрос к бд...");
         try {
             source = new JdbcConnectionSource(url);
             dao = DaoManager.createDao(source, Weather.class);
-            System.out.print("Запрос выполнен успешно");
+            System.out.println("Запрос выполнен успешно" + "#Поток:" + "MainThread");
             return dao.queryForAll();
 
         } catch (Exception e) {
@@ -67,11 +68,11 @@ public class DataManager {
     public Weather getWeatherForCity(String city) {
         for (Weather item : getAllWeather()) {
             if (city.equals(item.getCity())) {
-                System.out.println("Найдена погода для города " + city);
+                System.out.println("Найдена погода для города " + city + "#Поток:" + "MainThread");
                 return item;
             }
         }
-        System.err.println("Погоды для города " + city + " нет в наличии");
+        System.err.println("Погоды для города " + city + " нет в наличии" + " Поток#" + "MainThread");
         return null;
     }
 
@@ -79,12 +80,21 @@ public class DataManager {
         try {
             dao.createOrUpdate(weather);
 
+
         } catch (SQLException e) {
             System.err.println("Ошибка подключения к бд:" + e);
         }
 
     }
-
-
+//
+//INSERT INTO "Weather" ("city","temp","typeOfWeather") VALUES ("Одесса","19","Облачно");
+/*
+*
+* CREATE TABLE Weather
+("city" VARCHAR PRIMARY KEY , "temp" VARCHAR , "typeOfWeather" VARCHAR
+);
+*
+*
+* */
 }
 

@@ -1,5 +1,6 @@
 package Publisher;
 
+import Controller.DBUpdater.WeatherControllerLookup;
 import Controller.Implemention.WebServiceImpl;
 
 import javax.xml.ws.Endpoint;
@@ -12,12 +13,11 @@ public class WebPublisher {
         // запускаем веб-сервер на порту 1986
         // и по адресу, указанному в первом аргументе,
         // запускаем веб-сервис, передаваемый во втором аргументе
-        Endpoint.publish("http://192.168.1.3:1999/WeatherService", new WebServiceImpl());
+        Endpoint.publish("http://localhost:1999/WeatherService", new WebServiceImpl());
         System.out.println("Publisher: Сервер поднят! Порт 1999");
-        WebServiceImpl webService = new WebServiceImpl();
 
-        System.err.println(webService.getCites()[0]);
-        System.err.println(webService.getWeather("Одесса")[0] + "  " + webService.getWeather("Одесса")[1]);
+
+        new WeatherControllerLookup().start();
 
     }
 }
