@@ -23,44 +23,35 @@ public class WeatherControllerLookup extends Thread {
 
 
     public WeatherControllerLookup() {
-
-        /*    OwmClient owm = new OwmClient();
-        WeatherStatusResponse currentWeather = null;
-        try {
-            currentWeather = owm.currentWeatherAtCity("Odessa", "UA");
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-
-
-        if (currentWeather.hasWeatherStatus()) {
-                WeatherData weather = currentWeather.getWeatherStatus().get(0);
-                if (weather.getPrecipitation() == Integer.MIN_VALUE) {
-                    WeatherData.WeatherCondition weatherCondition = weather.getWeatherConditions().get(0);
-
-                    String description = weatherCondition.getDescription();
-                    System.out.println(description + "  "+ KelvinToCelciusConverter.Convert(weather.getTemp())+"°С");
-
-
-            }
-
-        }
-*/
     }
 
     @Override
     public void run() {
-        while (true) {
+
             System.out.println("Обновление бд...#Поток:" + this.getName());
             for (Weather item : DataManager.getInstance().getAllWeather()) {
                 try {
                     client = new OwmClient();
                     currentWeather = client.currentWeatherAtCity(item.getCityToResponse(), item.getCountryToResponse());
                 } catch (IOException | JSONException e) {
-                    e.printStackTrace();
+
+                    if (e instanceof IOException)
+                        System.err.println("Проверьте подключение к интернету...#Поток:" + this.getName());
+                    if (e instanceof JSONException)
+                        System.err.println("http://openweathermap.org/ прислал невнятный JSON...#Поток:" + this.getName());
+
+
+                    try {
+                        System.err.println("База данных не обновлена следущая попытка через 5 мин...#Поток:" + this.getName());
+                        sleep(300000);
+                        run();
+                    } catch (InterruptedException ie) {
+                        System.out.println("Поток " + this.getName() + " по не понятным причинам упал с фразой: " + e + " Перезапуск потока...");
+                        this.stop();
+                        this.start();
+                    }
                 }
+
 
 
                 if (currentWeather.hasWeatherStatus()) {
@@ -78,6 +69,7 @@ public class WeatherControllerLookup extends Thread {
 
                         DataManager.getInstance().addWeather(item);
 
+
                         System.out.println("Прогноз погоды для города " + item.getCity() + " успешно обновлен!...#Поток:" + this.getName());
                     }
 
@@ -87,8 +79,10 @@ public class WeatherControllerLookup extends Thread {
             System.out.println("Обновление бд успешно завершено...#Поток:" + this.getName());
             try {
                 sleep(300000);
+                run();
 
             } catch (InterruptedException e) {
+
                 System.out.println("Поток " + this.getName() + " по не понятным причинам упал с фразой: " + e + "Перезапуск потока...");
                 this.stop();
                 this.start();
@@ -96,5 +90,5 @@ public class WeatherControllerLookup extends Thread {
             }
         }
 
-    }
+
 }

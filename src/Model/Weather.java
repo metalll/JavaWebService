@@ -99,8 +99,6 @@ public class Weather {
         public Builder withTypeOfWeather(String typeOfWeather) {
             this.typeOfWeather = typeOfWeather;
             return this;
-
-
         }
 
         public Builder withCityToResponce(String city) {
@@ -114,7 +112,6 @@ public class Weather {
         }
 
         public Weather build() {
-
             return new Weather(city, temp, typeOfWeather, cityToResponse, countryToResponse);
         }
     }

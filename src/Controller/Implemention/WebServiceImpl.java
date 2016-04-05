@@ -12,15 +12,7 @@ import java.util.List;
 
 @WebService(endpointInterface = "Controller.Interfaces.IWebService")
 public class WebServiceImpl implements IWebService {
-    @Override
-    public String getHelloString(String name) {
-        // просто возвращаем приветствие
 
-
-        return "Hello, " + name + "!";
-
-
-    }
 
     @Override
     public String[] getWeather(String city) {
@@ -35,7 +27,8 @@ public class WebServiceImpl implements IWebService {
 
     @Override
     public String[] getCites() {
-        List<String> list = new ArrayList<String>();
+
+        List<String> list = new ArrayList<>();
         for (Weather item : DataManager.getInstance().getAllWeather()) {
             list.add(item.getCity());
         }

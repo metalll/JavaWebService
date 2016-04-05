@@ -27,6 +27,9 @@ public class DescriptionTranslator {
                 return "Облачно";
             case "Sky is Clear":
                 return "Ясно";
+            case "broken clouds":
+                return "Рваные облака";
+
         }
         return input;
     }

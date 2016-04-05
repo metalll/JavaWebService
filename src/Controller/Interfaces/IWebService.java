@@ -13,8 +13,7 @@ import javax.jws.soap.SOAPBinding;
 public interface IWebService {
 
     // говорим, что этот метод можно вызывать удаленно
-    @WebMethod
-    public String getHelloString(String name);
+
 
     @WebMethod
     public String[] getWeather(String city);
