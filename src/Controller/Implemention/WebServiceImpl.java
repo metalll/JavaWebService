@@ -4,17 +4,19 @@ import Controller.Interfaces.IWebService;
 import Data.DataManager;
 import Model.Weather;
 
+import javax.jws.WebMethod;
 import javax.jws.WebService;
 import java.util.ArrayList;
 import java.util.List;
 // таже аннотация, что и при описании интерфейса,
 
 
-@WebService(endpointInterface = "Controller.Interfaces.IWebService")
+@WebService(endpointInterface = "Controller.Interfaces.IWebService", targetNamespace = "WEB")
 public class WebServiceImpl implements IWebService {
 
 
     @Override
+    @WebMethod(action = "getWeather", operationName = "getWeather")
     public String[] getWeather(String city) {
         String str[] = new String[2];
 
@@ -26,6 +28,7 @@ public class WebServiceImpl implements IWebService {
     }
 
     @Override
+    @WebMethod(action = "getCites", operationName = "getCites")
     public String[] getCites() {
 
         List<String> list = new ArrayList<>();

@@ -42,6 +42,7 @@ public class WeatherControllerLookup extends Thread {
 
 
                     try {
+
                         System.err.println("База данных не обновлена следущая попытка через 5 мин...#Поток:" + this.getName());
                         sleep(300000);
                         run();

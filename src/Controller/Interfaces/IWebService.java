@@ -15,10 +15,12 @@ public interface IWebService {
     // говорим, что этот метод можно вызывать удаленно
 
 
-    @WebMethod
+    @WebMethod(action = "getWeather", operationName = "getWeather")
     public String[] getWeather(String city);
 
-    @WebMethod
+    @WebMethod(action = "getCites", operationName = "getCites")
     public String[] getCites();
+
+
 }
 
